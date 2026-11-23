@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Pressable, FlatList } from 'react-native';
 import { styles } from './globalStyles';
 import { products } from './products';
 import { useCart } from './CartContext';
+import { useFavorites } from './FavoritesContext';
+import { ALL_CATEGORIES } from './constants';
+import { getCategories, filterProducts } from './utils';
+import SearchBar from './SearchBar';
+import CategoryFilter from './CategoryFilter';
+import ProductCard from './ProductCard';
+import EmptyState from './EmptyState';
 
 export default function ProductList({ navigation }) {
   const { totalItems } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const [searchText, setSearchText] = useState('');
+  const [category, setCategory] = useState(ALL_CATEGORIES);
 
-  const renderProduct = ({ item }) => (
-    <Pressable
-      style={styles.card}
-      onPress={() => navigation.navigate('ProductDetails', { product: item })}
-    >
-      <Text style={styles.category}>{item.category}</Text>
-      <Text style={styles.cardTitle}>{item.name}</Text>
-      <Text style={styles.price}>₱{item.price.toLocaleString()}</Text>
-      <Text style={styles.linkText}>View Details →</Text>
-    </Pressable>
+  const categories = [ALL_CATEGORIES, ...getCategories(products)];
+  const visibleProducts = filterProducts(
+    products,
+    searchText,
+    category,
+    ALL_CATEGORIES
   );
 
   return (
@@ -28,11 +34,26 @@ export default function ProductList({ navigation }) {
         </Pressable>
       </View>
 
+      <SearchBar value={searchText} onChangeText={setSearchText} />
+      <CategoryFilter
+        categories={categories}
+        selected={category}
+        onSelect={setCategory}
+      />
+
       <FlatList
-        data={products}
+        data={visibleProducts}
         keyExtractor={(item) => item.id}
-        renderItem={renderProduct}
         contentContainerStyle={styles.list}
+        ListEmptyComponent={<EmptyState message="No products found." />}
+        renderItem={({ item }) => (
+          <ProductCard
+            product={item}
+            isFavorite={isFavorite(item.id)}
+            onPress={() => navigation.navigate('ProductDetails', { product: item })}
+            onToggleFavorite={() => toggleFavorite(item.id)}
+          />
+        )}
       />
     </View>
   );
