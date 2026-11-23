@@ -1,18 +1,13 @@
 import React from 'react';
-import { View, Text, Pressable, FlatList, Alert } from 'react-native';
+import { View, Text, Pressable, FlatList } from 'react-native';
 import { styles } from './globalStyles';
 import { useCart } from './CartContext';
 
 export default function CartScreen({ navigation }) {
-  const { items, removeFromCart, clearCart, totalPrice } = useCart();
+  const { items, removeFromCart, totalPrice } = useCart();
 
   const handleCheckout = () => {
-    Alert.alert(
-      'Order Placed',
-      `Thank you! Your total is ₱${totalPrice.toLocaleString()}.`
-    );
-    clearCart();
-    navigation.navigate('Home');
+    navigation.navigate('Checkout');
   };
 
   const renderItem = ({ item }) => (
