@@ -3,17 +3,22 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { CartProvider } from './CartContext';
+import { FavoritesProvider } from './FavoritesContext';
 import HomeScreen from './HomeScreen';
 import ProductList from './ProductList';
 import ProductDetails from './ProductDetails';
 import CartScreen from './CartScreen';
 import AboutScreen from './AboutScreen';
+import FavoritesScreen from './FavoritesScreen';
+import CheckoutScreen from './CheckoutScreen';
+import ContactScreen from './ContactScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <CartProvider>
+      <FavoritesProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
@@ -41,8 +46,24 @@ export default function App() {
             component={AboutScreen}
             options={{ title: 'About' }}
           />
+          <Stack.Screen
+            name="Favorites"
+            component={FavoritesScreen}
+            options={{ title: 'Favorites' }}
+          />
+          <Stack.Screen
+            name="Checkout"
+            component={CheckoutScreen}
+            options={{ title: 'Checkout' }}
+          />
+          <Stack.Screen
+            name="Contact"
+            component={ContactScreen}
+            options={{ title: 'Contact Us' }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
+      </FavoritesProvider>
     </CartProvider>
   );
 }
