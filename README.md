@@ -10,6 +10,10 @@
 - About screen
 - Shared cart state using React Context
 - Shared styles in one file
+- Search bar and category filter
+- Favorites list
+- Checkout form with shipping fee
+- Contact screen
 
 ## Files
 | File | Purpose |
@@ -23,6 +27,16 @@
 | `CartScreen.js` | Cart items, total and checkout |
 | `AboutScreen.js` | App information |
 | `App.js` | Navigation setup |
+| `constants.js` | Store name, currency and shipping settings |
+| `utils.js` | Price formatting, shipping fee and filter helpers |
+| `SearchBar.js` | Search input component |
+| `CategoryFilter.js` | Category chips component |
+| `EmptyState.js` | Reusable empty message component |
+| `ProductCard.js` | Product card with favorite heart |
+| `FavoritesContext.js` | Favorites state |
+| `FavoritesScreen.js` | List of favorite products |
+| `CheckoutScreen.js` | Delivery form and order summary |
+| `ContactScreen.js` | Store contact information |
 | `README.md` | Project documentation |
 
 ## Requirements
