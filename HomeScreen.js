@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { styles } from './globalStyles';
 import { useCart } from './CartContext';
+import { useFavorites } from './FavoritesContext';
 
 export default function HomeScreen({ navigation }) {
   const { totalItems } = useCart();
+  const { totalFavorites } = useFavorites();
 
   return (
     <View style={styles.container}>
@@ -28,6 +30,22 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.secondaryButtonText}>
           View Cart ({totalItems})
         </Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.secondaryButton}
+        onPress={() => navigation.navigate('Favorites')}
+      >
+        <Text style={styles.secondaryButtonText}>
+          My Favorites ({totalFavorites})
+        </Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.secondaryButton}
+        onPress={() => navigation.navigate('Contact')}
+      >
+        <Text style={styles.secondaryButtonText}>Contact Us</Text>
       </Pressable>
 
       <Pressable
